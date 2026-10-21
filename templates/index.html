@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cloud44 demo notes</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main>
+    <h1>Notes</h1>
+    <p class="lede">A small Flask app on PostgreSQL, the repository Cloud44 reads in the class demo.</p>
+    <form method="post" action="{{ url_for('add_note') }}">
+      <input name="body" maxlength="280" placeholder="Write a note" required autofocus>
+      <button>Post</button>
+    </form>
+    <ul>
+      {% for body, created_at in notes %}
+        <li><p>{{ body }}</p><time>{{ created_at.strftime('%d %b %H:%M') }}</time></li>
+      {% else %}
+        <li class="empty">No notes yet. Write the first one.</li>
+      {% endfor %}
+    </ul>
+  </main>
+</body>
+</html>

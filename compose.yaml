@@ -1,0 +1,13 @@
+# Local run: docker compose up, then http://localhost:8000
+services:
+  app:
+    build: .
+    ports: ["8000:8000"]
+    environment:
+      DATABASE_URL: postgresql://demo:demo@db:5432/demo
+    depends_on:
+      db: {condition: service_healthy}
+  db:
+    image: postgres:18
+    environment: {POSTGRES_USER: demo, POSTGRES_PASSWORD: demo, POSTGRES_DB: demo}
+    healthcheck: {test: ["CMD", "pg_isready", "-U", "demo"], interval: 2s, retries: 15}
